@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Container } from "@chakra-ui/react";
 
 import Setting from "./components/Setting";
-import Home from "./components/Home";
+import Home from "./components/home";
 import BottomMenu from "./components/BottomMenu";
 
 import { PomodoroMachineContext } from "./context/pomodoroMachineContext";
