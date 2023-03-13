@@ -15,9 +15,9 @@ const pomodoroMachine = createMachine<
   initial: "run",
   predictableActionArguments: true,
   context: {
-    focusTime: 25 * 60,
-    shortBreakTime: 5 * 60,
-    longBreakTime: 15 * 60,
+    focusTime: 25,
+    shortBreakTime: 5,
+    longBreakTime: 15,
     longBreakInterval: 4,
     workCount: 0,
     intervalTimer: 0.1,
