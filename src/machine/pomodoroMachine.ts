@@ -2,9 +2,9 @@ import { createMachine, assign, Sender } from "xstate";
 
 type PomodoroMachineContext = {
   focusTime: number;
-  shortBreak: number;
-  longBreak: number;
-  interval: number;
+  shortBreakTime: number;
+  longBreakTime: number;
+  longBreakInterval: number;
   workCount: number;
   elapsed: number;
   intervalTimer: number;
@@ -16,7 +16,11 @@ type PomodoroMachineEvent =
   | { type: "START_TIMER" }
   | { type: "PAUSE" }
   | { type: "RESUME" }
-  | { type: "RESET" };
+  | { type: "RESET" }
+  | { type: "UPDATE_FOCUS_TIME"; focusTime: number }
+  | { type: "UPDATE_SHORT_BREAK_TIME"; shortBreakTime: number }
+  | { type: "UPDATE_LONG_BREAK_TIME"; longBreakTime: number }
+  | { type: "UPDATE_LONG_BREAK_INTERVAL"; longBreakInterval: number };
 
 const ticker =
   (ctx: PomodoroMachineContext) => (send: Sender<PomodoroMachineEvent>) => {
@@ -36,10 +40,10 @@ const pomodoroMachine = createMachine<
   initial: "run",
   predictableActionArguments: true,
   context: {
-    focusTime: 25,
-    shortBreak: 5 * 60,
-    longBreak: 15 * 60,
-    interval: 4,
+    focusTime: 25 * 60,
+    shortBreakTime: 5 * 60,
+    longBreakTime: 15 * 60,
+    longBreakInterval: 4,
     workCount: 0,
     intervalTimer: 0.1,
     elapsed: 0,
@@ -139,34 +143,60 @@ const pomodoroMachine = createMachine<
       },
     },
   },
+  on: {
+    UPDATE_FOCUS_TIME: {
+      actions: "updateFocusTime",
+    },
+    UPDATE_SHORT_BREAK_TIME: {
+      actions: "updateShortBreakTime",
+    },
+    UPDATE_LONG_BREAK_TIME: {
+      actions: "updateLongBreakTime",
+    },
+    UPDATE_LONG_BREAK_INTERVAL: {
+      actions: "updateLongBreakInterval",
+    },
+  },
 }).withConfig({
   actions: {
     startTimer: assign({
       elapsed: (ctx) => ctx.elapsed + ctx.intervalTimer,
     }),
-    resumeTimer: assign({
-      elapsed: (context) => {
-        const remaining = context.focusTime - context.elapsed / 1000;
-        return remaining;
-      },
-      intervalTimer: (context) => {
-        const remaining = context.focusTime - context.elapsed / 1000;
-        return remaining >= 1 ? 1 : remaining;
-      },
-    }),
     incrementWorkCount: assign((context) => ({
       workCount: context.workCount + 1,
     })),
     resetWorkCount: assign({ workCount: 0 }),
+    updateFocusTime: assign({
+      focusTime: (ctx, event) =>
+        event.type === "UPDATE_FOCUS_TIME" ? event.focusTime : ctx.focusTime,
+    }),
+    updateShortBreakTime: assign({
+      shortBreakTime: (ctx, event) =>
+        event.type === "UPDATE_SHORT_BREAK_TIME"
+          ? event.shortBreakTime
+          : ctx.shortBreakTime,
+    }),
+    updateLongBreakTime: assign({
+      longBreakTime: (ctx, event) =>
+        event.type === "UPDATE_LONG_BREAK_TIME"
+          ? event.longBreakTime
+          : ctx.longBreakTime,
+    }),
+    updateLongBreakInterval: assign({
+      longBreakInterval: (ctx, event) =>
+        event.type === "UPDATE_LONG_BREAK_INTERVAL"
+          ? event.longBreakInterval
+          : ctx.longBreakInterval,
+    }),
   },
   delays: {
     FOCUS_TIME: (context) => context.focusTime * 1000,
-    SHORT_BREAK: (context) => context.shortBreak * 1000,
-    LONG_BREAK: (context) => context.longBreak * 1000,
+    SHORT_BREAK: (context) => context.longBreakTime * 1000,
+    LONG_BREAK: (context) => context.longBreakTime * 1000,
   },
   guards: {
-    shouldTakeShortBreak: (ctx) => ctx.workCount < ctx.interval,
-    shouldTakeLongBreak: (ctx) => ctx.workCount === ctx.interval,
+    shouldTakeShortBreak: (ctx) => ctx.workCount < ctx.longBreakInterval,
+    shouldTakeLongBreak: (ctx) => ctx.workCount === ctx.longBreakInterval,
   },
 });
 
