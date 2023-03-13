@@ -63,8 +63,8 @@ const Setting = () => {
           <NumberInput
             placeholder="Interval"
             color="whiteAlpha.800"
-            defaultValue={2}
-            min={1}
+            defaultValue={4}
+            min={2}
             max={10}
           >
             <NumberInputField />
