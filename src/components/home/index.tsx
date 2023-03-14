@@ -42,6 +42,7 @@ const Home = () => {
   const handleStartTimer = () => send({ type: "START_TIMER" });
   const handlePause = () => send({ type: "PAUSE" });
   const handleResume = () => send({ type: "RESUME" });
+  const handleReset = () => send({ type: "RESET" });
 
   let historyState: string = "";
 
@@ -180,7 +181,7 @@ const Home = () => {
               longBreak: longBreakTime,
             };
             const prevState = historyState as keyof typeof state;
-            const time: number = state[prevState];
+            const time = state[prevState];
 
             return (
               <>
@@ -189,6 +190,7 @@ const Home = () => {
                   isRunning={false}
                   onStart={handleResume}
                   session="Paused"
+                  onReset={handleReset}
                 />
               </>
             );

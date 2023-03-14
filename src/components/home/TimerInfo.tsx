@@ -1,5 +1,6 @@
-import { Heading, Center, VStack, IconButton } from "@chakra-ui/react";
+import { Heading, Center, VStack, IconButton, HStack } from "@chakra-ui/react";
 import { BsPause, BsPlay } from "react-icons/bs";
+import { MdRestartAlt } from "react-icons/md";
 
 import type React from "react";
 
@@ -8,6 +9,7 @@ type TimerInfoProps = {
   isRunning: boolean;
   onStart?: () => void;
   onPause?: () => void;
+  onReset?: () => void;
 };
 
 export const TimerInfo: React.FC<TimerInfoProps> = ({
@@ -15,6 +17,7 @@ export const TimerInfo: React.FC<TimerInfoProps> = ({
   isRunning,
   onStart,
   onPause,
+  onReset,
 }) => {
   return (
     <Center pt="12">
@@ -32,14 +35,24 @@ export const TimerInfo: React.FC<TimerInfoProps> = ({
             onClick={onPause}
           />
         ) : (
-          <IconButton
-            colorScheme="blue"
-            aria-label="Start Button"
-            size="lg"
-            icon={<BsPlay />}
-            fontSize="2xl"
-            onClick={onStart}
-          />
+          <HStack gap={4}>
+            <IconButton
+              colorScheme="blue"
+              aria-label="Start Button"
+              size="lg"
+              icon={<BsPlay />}
+              fontSize="2xl"
+              onClick={onStart}
+            />
+            <IconButton
+              colorScheme="blue"
+              aria-label="Reset Button"
+              size="lg"
+              icon={<MdRestartAlt />}
+              fontSize="2xl"
+              onClick={onReset}
+            />
+          </HStack>
         )}
       </VStack>
     </Center>
