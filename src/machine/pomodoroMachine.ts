@@ -5,6 +5,7 @@ import type {
   PomodoroMachineEvent,
   PomodoroMachineState,
 } from "./type";
+import { turnOnNotificationSound } from "../utils/audio/notificationSound";
 
 const pomodoroMachine = createMachine<
   PomodoroMachineContext,
@@ -41,13 +42,17 @@ const pomodoroMachine = createMachine<
                 FOCUS_TIME: [
                   {
                     target: "#shortBreak",
-                    actions: ["incrementWorkCount", "resetElapsed"],
+                    actions: [
+                      "incrementWorkCount",
+                      "resetElapsed",
+                      "runNotificationSound",
+                    ],
                     cond: "shouldTakeShortBreak",
                   },
                   {
                     target: "#longBreak",
                     cond: "shouldTakeLongBreak",
-                    actions: "resetElapsed",
+                    actions: ["resetElapsed", "runNotificationSound"],
                   },
                 ],
               },
@@ -68,7 +73,10 @@ const pomodoroMachine = createMachine<
                 src: ticker,
               },
               after: {
-                SHORT_BREAK: { target: "#focus.idle", actions: "resetElapsed" },
+                SHORT_BREAK: {
+                  target: "#focus.idle",
+                  actions: ["resetElapsed", "runNotificationSound"],
+                },
               },
             },
           },
@@ -89,7 +97,11 @@ const pomodoroMachine = createMachine<
               after: {
                 LONG_BREAK: {
                   target: "#focus.idle",
-                  actions: ["resetWorkCount", "resetElapsed"],
+                  actions: [
+                    "resetWorkCount",
+                    "resetElapsed",
+                    "runNotificationSound",
+                  ],
                 },
               },
             },
@@ -168,6 +180,9 @@ const pomodoroMachine = createMachine<
           : ctx.longBreakInterval,
     }),
     resetElapsed: assign({ elapsed: 0 }),
+    runNotificationSound: () => {
+      turnOnNotificationSound();
+    },
   },
   delays: {
     FOCUS_TIME: (context) => context.focusTime * 60 * 1000,
