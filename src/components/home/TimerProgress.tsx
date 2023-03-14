@@ -16,13 +16,16 @@ export const TimerProgress: React.FC<TimerProgressProps> = ({
   elapsed,
   time,
 }) => {
-  function formatTime(seconds: number) {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = Math.floor(seconds % 60);
-    const formattedMinutes = String(minutes).padStart(2, "0");
-    const formattedSeconds = String(remainingSeconds).padStart(2, "0");
-    return `${formattedMinutes}:${formattedSeconds}`;
+  function formatTime(timeInSeconds: number) {
+    const minutes = Math.floor(timeInSeconds / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (timeInSeconds % 60).toString().padStart(2, "0");
+    return `${minutes}:${seconds}`;
   }
+
+  const remainingTime = time * 60 - Math.floor(elapsed);
+  const formattedTime = formatTime(remainingTime);
 
   return (
     <Box pt="12">
@@ -35,7 +38,7 @@ export const TimerProgress: React.FC<TimerProgressProps> = ({
       >
         <CircularProgressLabel paddingTop="12px">
           <Heading size="lg" color="#83A5F7" pb="6">
-            {formatTime(Math.floor(elapsed))}
+            {formattedTime}
           </Heading>
         </CircularProgressLabel>
       </CircularProgress>
