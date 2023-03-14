@@ -99,6 +99,7 @@ const Home = () => {
               <TimerProgress elapsed={elapsed} time={focusTime} />
               <TimerInfo
                 isRunning={false}
+                isIdle={true}
                 onStart={handleStartTimer}
                 session="Focus Time"
               />
@@ -125,6 +126,7 @@ const Home = () => {
               <TimerProgress elapsed={elapsed} time={shortBreakTime} />
               <TimerInfo
                 isRunning={false}
+                isIdle={true}
                 onStart={handleStartTimer}
                 session="Short Break Time"
               />
@@ -151,6 +153,7 @@ const Home = () => {
               <TimerProgress elapsed={elapsed} time={longBreakTime} />
               <TimerInfo
                 isRunning={false}
+                isIdle={true}
                 onStart={handleStartTimer}
                 session="Long Break Time"
               />

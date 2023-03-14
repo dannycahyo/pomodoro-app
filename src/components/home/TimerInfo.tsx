@@ -7,6 +7,7 @@ import type React from "react";
 type TimerInfoProps = {
   session?: string;
   isRunning: boolean;
+  isIdle?: boolean;
   onStart?: () => void;
   onPause?: () => void;
   onReset?: () => void;
@@ -15,6 +16,7 @@ type TimerInfoProps = {
 export const TimerInfo: React.FC<TimerInfoProps> = ({
   session,
   isRunning,
+  isIdle,
   onStart,
   onPause,
   onReset,
@@ -44,14 +46,17 @@ export const TimerInfo: React.FC<TimerInfoProps> = ({
               fontSize="2xl"
               onClick={onStart}
             />
-            <IconButton
-              colorScheme="blue"
-              aria-label="Reset Button"
-              size="lg"
-              icon={<MdRestartAlt />}
-              fontSize="2xl"
-              onClick={onReset}
-            />
+
+            {!isIdle && (
+              <IconButton
+                colorScheme="blue"
+                aria-label="Reset Button"
+                size="lg"
+                icon={<MdRestartAlt />}
+                fontSize="2xl"
+                onClick={onReset}
+              />
+            )}
           </HStack>
         )}
       </VStack>
