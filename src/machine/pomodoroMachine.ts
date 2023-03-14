@@ -41,10 +41,14 @@ const pomodoroMachine = createMachine<
                 FOCUS_TIME: [
                   {
                     target: "#shortBreak",
-                    actions: "incrementWorkCount",
+                    actions: ["incrementWorkCount", "resetElapsed"],
                     cond: "shouldTakeShortBreak",
                   },
-                  { target: "#longBreak", cond: "shouldTakeLongBreak" },
+                  {
+                    target: "#longBreak",
+                    cond: "shouldTakeLongBreak",
+                    actions: "resetElapsed",
+                  },
                 ],
               },
             },
@@ -64,7 +68,7 @@ const pomodoroMachine = createMachine<
                 src: ticker,
               },
               after: {
-                SHORT_BREAK: { target: "#focus.idle" },
+                SHORT_BREAK: { target: "#focus.idle", actions: "resetElapsed" },
               },
             },
           },
@@ -85,7 +89,7 @@ const pomodoroMachine = createMachine<
               after: {
                 LONG_BREAK: {
                   target: "#focus.idle",
-                  actions: "resetWorkCount",
+                  actions: ["resetWorkCount", "resetElapsed"],
                 },
               },
             },
@@ -112,8 +116,8 @@ const pomodoroMachine = createMachine<
           target: "#run.hist",
         },
         RESET: {
-          target: "#run.focus",
-          actions: "resetWorkCount",
+          target: "#run",
+          actions: ["resetWorkCount", "resetElapsed"],
         },
       },
     },
@@ -163,11 +167,12 @@ const pomodoroMachine = createMachine<
           ? event.longBreakInterval
           : ctx.longBreakInterval,
     }),
+    resetElapsed: assign({ elapsed: 0 }),
   },
   delays: {
-    FOCUS_TIME: (context) => context.focusTime * 1000,
-    SHORT_BREAK: (context) => context.longBreakTime * 1000,
-    LONG_BREAK: (context) => context.longBreakTime * 1000,
+    FOCUS_TIME: (context) => context.focusTime * 60 * 1000,
+    SHORT_BREAK: (context) => context.longBreakTime * 60 * 1000,
+    LONG_BREAK: (context) => context.longBreakTime * 60 * 1000,
   },
   guards: {
     shouldTakeShortBreak: (ctx) => ctx.workCount < ctx.longBreakInterval,
