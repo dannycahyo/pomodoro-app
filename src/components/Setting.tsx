@@ -43,7 +43,7 @@ const Setting = () => {
     });
 
   return (
-    <Container centerContent minH="70vh">
+    <Container centerContent>
       <Heading size="lg" color="#83A5F7" pb="10">
         Add New Timer
       </Heading>

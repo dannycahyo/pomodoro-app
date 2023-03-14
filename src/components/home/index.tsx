@@ -43,8 +43,6 @@ const Home = () => {
   const handlePause = () => send({ type: "PAUSE" });
   const handleResume = () => send({ type: "RESUME" });
 
-  console.log(state);
-
   let historyState: string = "";
 
   if (typeof state.historyValue?.states === "object") {
@@ -56,7 +54,7 @@ const Home = () => {
   }
 
   return (
-    <Container centerContent minH="70vh">
+    <Container centerContent>
       <Center>
         <VStack>
           <Heading size="lg" color="#83A5F7" pb="6">
