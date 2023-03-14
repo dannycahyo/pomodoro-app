@@ -16,7 +16,7 @@ const BottomMenu: React.FC<BottomMenuProps> = ({ route, onRouteChange }) => {
       : { colorScheme: "whiteAlpha" };
 
   return (
-    <Box pt="24">
+    <Box pt="10">
       <HStack spacing="24px">
         <IconButton
           {...homeBottomMenuStyle}
