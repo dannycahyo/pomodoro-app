@@ -1,4 +1,4 @@
-import { Box, Container, IconButton, HStack } from "@chakra-ui/react";
+import { Box, IconButton, HStack } from "@chakra-ui/react";
 import { BsFillGearFill, BsFillHouseFill } from "react-icons/bs";
 
 type BottomMenuProps = {

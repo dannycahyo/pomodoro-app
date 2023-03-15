@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Container } from "@chakra-ui/react";
 
-import Setting from "./components/Setting";
+import Setting from "./components/setting";
 import Home from "./components/home";
 import BottomMenu from "./components/BottomMenu";
 
@@ -16,7 +16,10 @@ function App() {
         {route === "home" && <Home />}
         {route === "setting" && <Setting />}
       </PomodoroMachineContext.Provider>
-      <BottomMenu route={route} onRouteChange={(route) => setRoute(route)} />
+      <BottomMenu
+        route={route}
+        onRouteChange={(newRoute) => setRoute(newRoute)}
+      />
     </Container>
   );
 }
