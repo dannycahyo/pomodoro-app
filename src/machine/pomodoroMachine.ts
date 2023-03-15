@@ -186,7 +186,7 @@ const pomodoroMachine = createMachine<
   },
   delays: {
     FOCUS_TIME: (context) => context.focusTime * 60 * 1000,
-    SHORT_BREAK: (context) => context.longBreakTime * 60 * 1000,
+    SHORT_BREAK: (context) => context.shortBreakTime * 60 * 1000,
     LONG_BREAK: (context) => context.longBreakTime * 60 * 1000,
   },
   guards: {
