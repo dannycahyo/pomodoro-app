@@ -67,6 +67,11 @@ const Home = () => {
               value={task.value}
               onChange={handleTaskChange}
               onBlur={handleEditTask}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleEditTask();
+                }
+              }}
             />
           ) : (
             <>
