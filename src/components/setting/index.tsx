@@ -3,7 +3,6 @@ import {
   Container,
   Heading,
   VStack,
-  Select,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
@@ -69,15 +68,16 @@ const Setting = () => {
       <Heading size="lg" color="#83A5F7" pb="10">
         Add New Timer
       </Heading>
-      {pomodoroSettingOptions.map((pomodoroOption) => (
-        <SelectOption
-          label={pomodoroOption.label}
-          time={pomodoroOption.time}
-          options={pomodoroOption.options}
-          onChange={pomodoroOption.onChange}
-        />
-      ))}
       <VStack gap={2}>
+        {pomodoroSettingOptions.map((pomodoroOption) => (
+          <SelectOption
+            key={pomodoroOption.label}
+            label={pomodoroOption.label}
+            time={pomodoroOption.time}
+            options={pomodoroOption.options}
+            onChange={pomodoroOption.onChange}
+          />
+        ))}
         <Box>
           <Text color="whiteAlpha.800" mb="2">
             Intervals
