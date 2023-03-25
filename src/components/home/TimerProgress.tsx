@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
   Box,
   CircularProgress,
@@ -13,7 +12,10 @@ type TimerProgressProps = {
   time: number;
 };
 
-const TimerProgress: React.FC<TimerProgressProps> = ({ elapsed, time }) => {
+export const TimerProgress: React.FC<TimerProgressProps> = ({
+  elapsed,
+  time,
+}) => {
   function formatTime(timeInSeconds: number) {
     const minutes = Math.floor(timeInSeconds / 60)
       .toString()
@@ -22,41 +24,15 @@ const TimerProgress: React.FC<TimerProgressProps> = ({ elapsed, time }) => {
     return `${minutes}:${seconds}`;
   }
 
-  const [timerWorker, setTimerWorker] = useState<Worker | null>(null);
-  const [workerTime, setWorkerTime] = useState<number>(elapsed);
-
-  const remainingTime = time * 60 - Math.floor(workerTime);
+  const remainingTime = time * 60 - Math.floor(elapsed);
   const formattedTime = formatTime(remainingTime);
-
-  useEffect(() => {
-    if (timerWorker) {
-      timerWorker.postMessage(workerTime);
-    }
-  }, [workerTime]);
-
-  useEffect(() => {
-    if (typeof window !== "undefined" && "Worker" in window) {
-      const newWorker = new Worker("/worker.js");
-      setTimerWorker(newWorker);
-      return () => {
-        newWorker.terminate();
-      };
-    }
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setWorkerTime((prevTime) => prevTime + 1);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <Box pt="12">
       <CircularProgress
         min={0}
         max={time * 60}
-        value={Math.floor(workerTime)}
+        value={Math.floor(elapsed)}
         size="180px"
         thickness="12px"
       >
@@ -69,5 +45,3 @@ const TimerProgress: React.FC<TimerProgressProps> = ({ elapsed, time }) => {
     </Box>
   );
 };
-
-export { TimerProgress };
