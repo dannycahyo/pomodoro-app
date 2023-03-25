@@ -17,10 +17,10 @@ type TimerProgressProps = {
 export const TimerProgress: React.FC<TimerProgressProps> = ({
   elapsed,
   time,
-  isRunning = false,
+  isRunning,
 }) => {
   const [totalElapsed, setTotalElapsed] = useState(elapsed);
-  const [isActive, setIsActive] = useState<boolean>(false);
+  const [isActive, setIsActive] = useState<boolean>(true);
   const requestRef = useRef<number>();
   const previousTimeRef = useRef<number>();
 
@@ -42,13 +42,17 @@ export const TimerProgress: React.FC<TimerProgressProps> = ({
   const handleVisibilityChange = () => {
     if (document.visibilityState === "hidden") {
       setIsActive(false);
-      previousTimeRef.current = performance.now();
+      if (isRunning) {
+        previousTimeRef.current = performance.now();
+      }
     } else {
       setIsActive(true);
       if (previousTimeRef.current) {
-        const currentTime = performance.now();
-        tick((currentTime - previousTimeRef.current) / 1000);
-        previousTimeRef.current = undefined;
+        if (isRunning) {
+          const currentTime = performance.now();
+          tick((currentTime - previousTimeRef.current) / 1000);
+          previousTimeRef.current = undefined;
+        }
       }
     }
   };
