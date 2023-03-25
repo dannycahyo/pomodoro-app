@@ -104,7 +104,7 @@ const Home = () => {
               <TimerProgress elapsed={elapsed} time={focusTime} />
               <TimerInfo
                 isRunning={false}
-                isIdle={true}
+                isIdle
                 onStart={handleStartTimer}
                 session="Focus Time"
               />
@@ -115,12 +115,8 @@ const Home = () => {
           { value: { run: { focus: "runTimer" } } },
           ({ context: { elapsed, focusTime } }) => (
             <>
-              <TimerProgress elapsed={elapsed} time={focusTime} />
-              <TimerInfo
-                isRunning={true}
-                onPause={handlePause}
-                session="Focus Time"
-              />
+              <TimerProgress elapsed={elapsed} time={focusTime} isRunning />
+              <TimerInfo isRunning onPause={handlePause} session="Focus Time" />
             </>
           )
         )
@@ -131,7 +127,7 @@ const Home = () => {
               <TimerProgress elapsed={elapsed} time={shortBreakTime} />
               <TimerInfo
                 isRunning={false}
-                isIdle={true}
+                isIdle
                 onStart={handleStartTimer}
                 session="Short Break Time"
               />
@@ -142,9 +138,13 @@ const Home = () => {
           { value: { run: { shortBreak: "runTimer" } } },
           ({ context: { elapsed, shortBreakTime } }) => (
             <>
-              <TimerProgress elapsed={elapsed} time={shortBreakTime} />
+              <TimerProgress
+                elapsed={elapsed}
+                time={shortBreakTime}
+                isRunning
+              />
               <TimerInfo
-                isRunning={true}
+                isRunning
                 onPause={handlePause}
                 session="Short Break Time"
               />
@@ -158,7 +158,7 @@ const Home = () => {
               <TimerProgress elapsed={elapsed} time={longBreakTime} />
               <TimerInfo
                 isRunning={false}
-                isIdle={true}
+                isIdle
                 onStart={handleStartTimer}
                 session="Long Break Time"
               />
@@ -169,9 +169,9 @@ const Home = () => {
           { value: { run: { longBreak: "runTimer" } } },
           ({ context: { elapsed, longBreakTime } }) => (
             <>
-              <TimerProgress elapsed={elapsed} time={longBreakTime} />
+              <TimerProgress elapsed={elapsed} time={longBreakTime} isRunning />
               <TimerInfo
-                isRunning={true}
+                isRunning
                 onPause={handlePause}
                 session="Long Break Time"
               />
