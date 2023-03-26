@@ -77,6 +77,12 @@ export const TimerProgress: React.FC<TimerProgressProps> = ({
     };
   }, [isActive, isRunning]);
 
+  useEffect(() => {
+    if (!isRunning) {
+      setTotalElapsed(elapsed);
+    }
+  }, [elapsed, isRunning]);
+
   return (
     <Box pt="12">
       <CircularProgress
