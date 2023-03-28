@@ -193,7 +193,11 @@ const Home = () => {
 
             return (
               <>
-                <TimerProgress elapsed={elapsed} time={time} />
+                <TimerProgress
+                  elapsed={elapsed}
+                  time={time}
+                  isRunning={false}
+                />
                 <TimerInfo
                   isRunning={false}
                   onStart={handleResume}

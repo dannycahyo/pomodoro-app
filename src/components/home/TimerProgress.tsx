@@ -44,6 +44,8 @@ export const TimerProgress: React.FC<TimerProgressProps> = ({
       setIsActive(false);
       if (isRunning) {
         previousTimeRef.current = performance.now();
+      } else {
+        previousTimeRef.current = undefined;
       }
     } else {
       setIsActive(true);
@@ -52,6 +54,8 @@ export const TimerProgress: React.FC<TimerProgressProps> = ({
           const currentTime = performance.now();
           tick((currentTime - previousTimeRef.current) / 1000);
           previousTimeRef.current = undefined;
+        } else {
+          previousTimeRef.current = performance.now();
         }
       }
     }
@@ -65,6 +69,8 @@ export const TimerProgress: React.FC<TimerProgressProps> = ({
           tick(timeSinceLastTick);
         }
         previousTimeRef.current = now;
+      } else {
+        previousTimeRef.current = undefined;
       }
       requestRef.current = requestAnimationFrame(animate);
     });
@@ -76,12 +82,6 @@ export const TimerProgress: React.FC<TimerProgressProps> = ({
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [isActive, isRunning]);
-
-  useEffect(() => {
-    if (!isRunning) {
-      setTotalElapsed(elapsed);
-    }
-  }, [elapsed, isRunning]);
 
   return (
     <Box pt="12">
