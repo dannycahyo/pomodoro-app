@@ -85,7 +85,8 @@ export const TimerProgress: React.FC<TimerProgressProps> = ({
 
   useEffect(() => {
     if (totalElapsed >= time * 60) {
-      setTotalElapsed(0);
+      // TODO: It should be 0, but somehow on the current implementation shows the timer is 2 seconds ahead
+      setTotalElapsed(-2);
     } else {
       return;
     }
