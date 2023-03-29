@@ -83,6 +83,14 @@ export const TimerProgress: React.FC<TimerProgressProps> = ({
     };
   }, [isActive, isRunning]);
 
+  useEffect(() => {
+    if (totalElapsed >= time * 60) {
+      setTotalElapsed(0);
+    } else {
+      return;
+    }
+  }, [totalElapsed, time]);
+
   return (
     <Box pt="12">
       <CircularProgress
