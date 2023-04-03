@@ -84,12 +84,12 @@ export const TimerProgress: React.FC<TimerProgressProps> = ({
   }, [isActive, isRunning]);
 
   useEffect(() => {
-    if (totalElapsed >= time * 60) {
+    if (totalElapsed >= time * 60 || elapsed === 0) {
       setTotalElapsed(0);
     } else {
       return;
     }
-  }, [totalElapsed, time]);
+  }, [totalElapsed, time, elapsed]);
 
   return (
     <Box pt="12">
