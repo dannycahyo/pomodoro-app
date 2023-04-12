@@ -8,18 +8,28 @@ type BottomMenuProps = {
 
 const BottomMenu: React.FC<BottomMenuProps> = ({ route, onRouteChange }) => {
   const homeBottomMenuStyle =
-    route === "home" ? { colorScheme: "whiteAlpha" } : { colorScheme: "blue" };
+    route === "home" ? { colorScheme: "blue" } : { colorScheme: "whiteAlpha" };
 
   const settingBottomMenuStyle =
     route === "setting"
-      ? { colorScheme: "whiteAlpha" }
-      : { colorScheme: "blue" };
+      ? { colorScheme: "blue" }
+      : { colorScheme: "whiteAlpha" };
+
+  const hoverHomeBottomMenuStyle =
+    route === "home"
+      ? { backgroundColor: "gray.700" }
+      : { backgroundColor: "blue.700" };
+  const hoverSettingBottomMenuStyle =
+    route === "setting"
+      ? { backgroundColor: "gray.700" }
+      : { backgroundColor: "blue.700" };
 
   return (
     <Box pt="10">
       <HStack spacing="24px">
         <IconButton
           {...homeBottomMenuStyle}
+          _hover={{ ...hoverHomeBottomMenuStyle }}
           variant="ghost"
           aria-label="Home Button"
           size="lg"
@@ -29,6 +39,7 @@ const BottomMenu: React.FC<BottomMenuProps> = ({ route, onRouteChange }) => {
         />
         <IconButton
           {...settingBottomMenuStyle}
+          _hover={{ ...hoverSettingBottomMenuStyle }}
           variant="ghost"
           aria-label="Setting Button"
           size="lg"
