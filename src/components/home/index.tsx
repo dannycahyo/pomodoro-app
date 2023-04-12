@@ -54,8 +54,6 @@ const Home = () => {
     }
   }
 
-  console.log(state);
-
   return (
     <Container centerContent>
       <Center>
@@ -69,6 +67,7 @@ const Home = () => {
               value={task.value}
               onChange={handleTaskChange}
               onBlur={handleEditTask}
+              autoFocus
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   handleEditTask();
