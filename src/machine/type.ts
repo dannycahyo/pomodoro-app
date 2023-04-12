@@ -6,6 +6,7 @@ type PomodoroMachineContext = {
   workCount: number;
   elapsed: number;
   intervalTimer: number;
+  nextStateAfterSkip: string;
 };
 
 type PomodoroMachineState =
@@ -64,7 +65,8 @@ type PomodoroMachineEvent =
   | { type: "UPDATE_FOCUS_TIME"; focusTime: number }
   | { type: "UPDATE_SHORT_BREAK_TIME"; shortBreakTime: number }
   | { type: "UPDATE_LONG_BREAK_TIME"; longBreakTime: number }
-  | { type: "UPDATE_LONG_BREAK_INTERVAL"; longBreakInterval: number };
+  | { type: "UPDATE_LONG_BREAK_INTERVAL"; longBreakInterval: number }
+  | { type: "SKIP"; nextStateAfterSkip: string };
 
 export type {
   PomodoroMachineContext,

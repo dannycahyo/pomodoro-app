@@ -54,6 +54,8 @@ const Home = () => {
     }
   }
 
+  console.log(state);
+
   return (
     <Container centerContent>
       <Center>
@@ -183,13 +185,19 @@ const Home = () => {
           ({
             context: { elapsed, focusTime, shortBreakTime, longBreakTime },
           }) => {
-            const state = {
+            const timerState = {
               focus: focusTime,
               shortBreak: shortBreakTime,
               longBreak: longBreakTime,
             };
-            const prevState = historyState as keyof typeof state;
-            const time = state[prevState];
+            const nextState = {
+              focus: state.context.workCount === 4 ? "longBreak" : "shortBreak",
+              shortBreak: "focus",
+              longBreak: "focus",
+            };
+            const prevState = historyState as keyof typeof timerState;
+            const time = timerState[prevState];
+            const nextStateAfterSkip = nextState[prevState];
 
             return (
               <>
@@ -203,6 +211,12 @@ const Home = () => {
                   onStart={handleResume}
                   session="Paused"
                   onReset={handleReset}
+                  onSkip={() =>
+                    send({
+                      type: "SKIP",
+                      nextStateAfterSkip,
+                    })
+                  }
                 />
               </>
             );
