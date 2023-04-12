@@ -22,13 +22,14 @@ To use Pomodoro Timer, follow these steps:
 - Click the "Start" button to start the timer
 - Work for the specified interval (default is 25 minutes)
 - Take a break for the specified interval (default is 5 minutes)
-- Repeat steps 3-4 until your work is complete and start the long break
+- Repeat steps 3-4 until your work is complete and start the long break after the fourth interval
 
 
 ## Features
 - Customizable work and break intervals
 - Sound notifications when the timer ends
 - Pause and resume functionality
+- Skip to go to the next session
 - Reset button to start a new pomodoro session
 
 ## Contact Information
