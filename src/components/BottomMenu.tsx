@@ -8,12 +8,12 @@ type BottomMenuProps = {
 
 const BottomMenu: React.FC<BottomMenuProps> = ({ route, onRouteChange }) => {
   const homeBottomMenuStyle =
-    route === "home" ? { colorScheme: "blue" } : { colorScheme: "whiteAlpha" };
+    route === "home" ? { colorScheme: "whiteAlpha" } : { colorScheme: "blue" };
 
   const settingBottomMenuStyle =
     route === "setting"
-      ? { colorScheme: "blue" }
-      : { colorScheme: "whiteAlpha" };
+      ? { colorScheme: "whiteAlpha" }
+      : { colorScheme: "blue" };
 
   return (
     <Box pt="10">
